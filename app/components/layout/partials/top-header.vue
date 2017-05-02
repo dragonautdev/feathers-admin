@@ -3,7 +3,7 @@
     <div class="container">
       <div class="nav-left">
         <router-link class="nav-item title is-3" :to="{ name: 'admin.home' }">
-          {{ title }} - Admin Panel
+          {{ $site.name }}
         </router-link>
       </div>
       <span class="nav-toggle"  @click="toggleMenu">
@@ -30,8 +30,7 @@ import config from '../../../config'
 export default {
   data () {
     return {
-      isOpen: false,
-      title: config.appTitle
+      isOpen: false
     }
   },
   methods: {

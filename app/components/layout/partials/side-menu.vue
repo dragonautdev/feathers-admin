@@ -1,25 +1,25 @@
 <template lang="html">
   <aside class="menu aside">
     <p></p>
-    <p class="menu-label">
-      {{ $t('sidebar.users')}}
-    </p>
-    <ul class="menu-list">
-      <li><router-link :to="{ name: 'admin.users' }"><span class="icon"><i class="fa fa-users"></i></span>&nbsp;{{ $t('sidebar.users') }}</router-link></li>
-
-    </ul>
-    <p class="menu-label">{{ $t("sidebar.events") }}</p>
-    <ul class="menu-list">
-      <li><router-link :to="{ name: 'admin.contacts' }"><span class="icon"><i class="fa fa-phone"></i></span>&nbsp;{{ $t('sidebar.contacts') }}</router-link></li>
-      <li><router-link :to="{name: 'admin.events'}"><span class="icon"><i class="fa fa-calendar"></i></span>&nbsp;{{ $t('sidebar.events') }}</router-link></li>
-      <li><router-link :to="{ name: 'admin.registrations' }"><span class="icon"><i class="fa fa-id-card"></i></span>&nbsp;{{ $t('sidebar.registrations') }}</router-link></li>
-    </ul>
+    <div class="" v-for="module in $site.modules">
+      <side-menu-module v-if="module.services" :module="module"></side-menu-module>
+      <ul class="menu-list" v-else>
+        <side-menu-service :service="module"></side-menu-service>
+      </ul>
+    </div>
   </aside>
 </template>
 
 <script>
+import SideMenuModule from './side-menu-module.vue'
+import SideMenuService from './side-menu-service.vue'
+
 export default {
-  name: 'adminSideMenu'
+  name: 'adminSideMenu',
+  components: {
+    'side-menu-module': SideMenuModule,
+    'side-menu-service': SideMenuService
+  }
 }
 </script>
 

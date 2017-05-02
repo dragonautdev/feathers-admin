@@ -19,12 +19,46 @@ class Service {
       delete: true
     }
     Object.assign(this.options, options)
+    this._routes = {
+      list: {
+        name: this.name,
+        component: List,
+        path: '',
+        meta: {
+          loginRequired: true,
+          service: service
+        }
+      },
+      create: {
+        name: this.name + '.create',
+        component: Create,
+        path: 'create',
+        meta: {
+          loginRequired: true,
+          service: service
+        }
+      },
+      update: {
+        name: this.name + '.update',
+        component: Create,
+        props: true,
+        path: ':id',
+        meta: {
+          loginRequired: true,
+          service: service
+        }
+      }
+    }
   }
 
+  get routes() {
+    return this._routes
+  }
+  
   /**
    * this method returns the routes for our service
    */
-  routes() {
+  router() {
     let service = this
     let routes = [
       {
@@ -34,38 +68,13 @@ class Service {
       }
     ]
     if (service.options.list) {
-      routes.children.push({
-        name: this.name,
-        component: List,
-        path: '',
-        meta: {
-          loginRequired: true,
-          service: service
-        }
-      })
+      routes.children.push(service.routes.list)
     }
     if (service.options.create) {
-      routes.children.push({
-        name: this.name + '.create',
-        component: Create,
-        path: 'create',
-        meta: {
-          loginRequired: true,
-          service: service
-        }
-      })
+      routes.children.push(service.routes.create)
     }
     if (service.options.update) {
-      routes.children.push({
-        name: this.name + '.update',
-        component: Create,
-        props: true,
-        path: ':id',
-        meta: {
-          loginRequired: true,
-          service: service
-        }
-      })
+      routes.children.push(service.routes.update)
     }
 
     return routes

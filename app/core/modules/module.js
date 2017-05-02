@@ -22,16 +22,10 @@ class Module {
   /**
    * Returns an array with the routes for this module
    */
-  routes() {
-    let routes = [
-      {
-        path: this.name,
-        component: Index,
-        children: []
-      }
-    ]
+  router() {
+    let routes = []
     for (let index in this.services) {
-      routes.children.push(this.services[index].routes())
+      routes.push(this.services[index].routes())
     }
     return routes
   }
